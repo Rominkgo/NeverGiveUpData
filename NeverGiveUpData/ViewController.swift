@@ -6,6 +6,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         introScreenNameSetup()
+        introScreenAgeSetup()
     }
     
     @IBOutlet weak var nameField: UITextField!
@@ -20,7 +21,12 @@ class ViewController: UIViewController {
             print("Error!")
             return
         }
+        guard let textAge = ageField.text, !textAge.isEmpty else {
+            print("Error Here too!")
+            return
+        }
         saveNameInUserDefaults(text: text)
+        saveAgeInUserDefaults(text: Int(textAge) ?? 0)
         print("Success!")
         entryResponder.text = "Thank you"
     }
@@ -57,12 +63,12 @@ class ViewController: UIViewController {
     
     func introScreenAgeSetup(){
         let age = getAgeFromUserDetails() ?? 0
-        var smackTalk: String
+        var smackTalk: String?
 
         if age < 26 {
-            let smackTalk = ("Wow! \(age) ? What a baby")
+            smackTalk = ("Wow! \(age) ? What a baby")
         } else {
-            let smackTalk = ("Wow you are so old")
+            smackTalk = ("Wow you are so old")
         }
         
         ageText.text = smackTalk
